@@ -1,4 +1,28 @@
-<h1>Welcome to SvelteKit</h1>
-<p>
-  Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
-</p>
+<script lang="ts">
+  type Priority = 'p1' | 'p2' | 'p3';
+
+  type Task = {
+    id: number;
+    title: string;
+    isCompleted: boolean;
+    priority?: Priority;
+  };
+
+  const tasks: Task[] = [
+    {
+      id: 1,
+      title: 'Learn Svelte',
+      isCompleted: true,
+      priority: 'p1',
+    },
+  ];
+</script>
+
+<div>
+  <h1>Tasks</h1>
+  <ul>
+    {#each tasks as task (task.id)}
+      <li>{task.title}</li>
+    {/each}
+  </ul>
+</div>
