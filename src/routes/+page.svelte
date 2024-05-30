@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { afterUpdate } from 'svelte';
   import type { Task } from '../types';
   import AddTask from './AddTask.svelte';
+  import TaskList from './TaskList.svelte';
+  import TaskListHeader from './TaskListHeader.svelte';
+  import TaskListItem from './TaskListItem.svelte';
 
   let tasks: Task[] = [];
 
@@ -11,18 +13,15 @@
       { id: new Date().getTime(), title: taskName, isCompleted: false },
     ];
   };
-
-  afterUpdate(() => {
-    console.log('Page Rendered');
-  });
 </script>
 
 <div>
   <h1>Tasks</h1>
   <AddTask {addTask} />
-  <ul>
+  <TaskList>
+    <TaskListHeader slot="header" count={tasks.length} />
     {#each tasks as task (task.id)}
-      <li>{task.title}</li>
+      <TaskListItem>{task.title}</TaskListItem>
     {/each}
-  </ul>
+  </TaskList>
 </div>
