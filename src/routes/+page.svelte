@@ -8,29 +8,31 @@
     priority?: Priority;
   };
 
-  let tasks: Task[] = [
-    {
-      id: 1,
-      title: 'Learn Svelte',
-      isCompleted: true,
-      priority: 'p1',
-    },
-  ];
+  let tasks: Task[] = [];
 
   let taskName = '';
 
   const addTask = () => {
+    const trimmedTaskName = taskName.trim();
+
+    if (!trimmedTaskName) return;
+
     tasks = [
       ...tasks,
-      { id: new Date().getTime(), title: taskName, isCompleted: false },
+      { id: new Date().getTime(), title: trimmedTaskName, isCompleted: false },
     ];
+    taskName = '';
+  };
+
+  const onKeydown = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') addTask();
   };
 </script>
 
 <div>
   <h1>Tasks</h1>
   <label for="task-input">Add Task: </label>
-  <input id="task-input" bind:value={taskName} />
+  <input id="task-input" bind:value={taskName} on:keydown={onKeydown} />
   <button on:click={addTask}>Add</button>
   <ul>
     {#each tasks as task (task.id)}
