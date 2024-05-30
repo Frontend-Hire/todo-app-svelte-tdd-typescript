@@ -1,39 +1,25 @@
 <script lang="ts">
-  type Priority = 'p1' | 'p2' | 'p3';
-
-  type Task = {
-    id: number;
-    title: string;
-    isCompleted: boolean;
-    priority?: Priority;
-  };
+  import { afterUpdate } from 'svelte';
+  import type { Task } from '../types';
+  import AddTask from './AddTask.svelte';
 
   let tasks: Task[] = [];
 
-  let taskName = '';
-
-  const addTask = () => {
-    const trimmedTaskName = taskName.trim();
-
-    if (!trimmedTaskName) return;
-
+  const addTask = (taskName: string) => {
     tasks = [
       ...tasks,
-      { id: new Date().getTime(), title: trimmedTaskName, isCompleted: false },
+      { id: new Date().getTime(), title: taskName, isCompleted: false },
     ];
-    taskName = '';
   };
 
-  const onKeydown = (e: KeyboardEvent) => {
-    if (e.key === 'Enter') addTask();
-  };
+  afterUpdate(() => {
+    console.log('Page Rendered');
+  });
 </script>
 
 <div>
   <h1>Tasks</h1>
-  <label for="task-input">Add Task: </label>
-  <input id="task-input" bind:value={taskName} on:keydown={onKeydown} />
-  <button on:click={addTask}>Add</button>
+  <AddTask {addTask} />
   <ul>
     {#each tasks as task (task.id)}
       <li>{task.title}</li>
