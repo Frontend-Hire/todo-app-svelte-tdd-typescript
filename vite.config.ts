@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [sveltekit(), svelteTesting()],
   test: {
     environment: 'jsdom',
+    setupFiles: ['./src/tests/setup-test.ts'],
   },
 });
