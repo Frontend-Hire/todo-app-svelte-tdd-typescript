@@ -14,11 +14,11 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "**/*.{js,ts,jsx,tsx}": [
+    "**/*.{js,ts,svelte}": [
       "eslint --fix",
       "prettier --write --ignore-unknown"
     ],
-    "!**/*.{js,ts,jsx,tsx}": [
+    "!**/*.{js,ts,svelte}": [
       "prettier --write --ignore-unknown"
     ]
   },
